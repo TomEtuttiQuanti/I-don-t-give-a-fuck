@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vidéo Auto</title>
     <style>
+        @font-face {
+            font-family: 'Avenir';
+            src: url('avenir-book.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             background-color: black;
             color: white;
@@ -15,7 +22,14 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+            font-family: 'Avenir', sans-serif;
         }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
         video {
             width: 80%;
             border-radius: 10px;
@@ -26,7 +40,7 @@
     <h1>Mantra du GOP 🔊</h1>
 
     <!-- Vidéo locale -->
-    <video id="myVideo" autoplay loop playsinline controls>
+    <video id="myVideo" autoplay loop playsinline muted>
         <source src="mantra.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la lecture de vidéos.
     </video>
@@ -34,7 +48,19 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let video = document.getElementById("myVideo");
-            video.volume = 0.75; // Réglage du volume à 75%
+
+            // Essayer de forcer l'autoplay avec le son après l'interaction utilisateur
+            function playVideo() {
+                video.muted = false;
+                video.volume = 0.75; // Volume à 75%
+                video.play().catch(error => console.log("Autoplay bloqué par le navigateur :", error));
+            }
+
+            // Lancer la vidéo dès que possible
+            playVideo();
+
+            // Écoute un clic pour s'assurer que l'autoplay fonctionne
+            document.body.addEventListener("click", playVideo);
         });
     </script>
 
