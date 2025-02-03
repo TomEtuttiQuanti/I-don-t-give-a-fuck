@@ -23,6 +23,7 @@
             justify-content: center;
             height: 100vh;
             font-family: 'Avenir', sans-serif;
+            position: relative;
         }
 
         h1 {
@@ -30,40 +31,78 @@
             margin-bottom: 10px;
         }
 
-        video {
+        .video-container {
+            position: relative;
             width: 80%;
+            max-width: 800px;
+        }
+
+        video {
+            width: 100%;
             border-radius: 10px;
+        }
+
+        /* Style de la vignette */
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <h1>Mantra du GOP 🔊</h1>
+    <h1>Mantra du GOP : 📢</h1>
 
-    <!-- Vidéo locale -->
-    <video id="myVideo" autoplay loop playsinline muted>
-        <source src="mantra.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la lecture de vidéos.
-    </video>
+    <div class="video-container">
+        <!-- Vidéo locale -->
+        <video id="myVideo" loop playsinline muted>
+            <source src="mantra.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+
+        <!-- Vignette "Cliquez ici! ▶️" -->
+        <div id="overlay" class="overlay">Cliquez ici! ▶️</div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let video = document.getElementById("myVideo");
+            let overlay = document.getElementById("overlay");
 
-            // Essayer de forcer l'autoplay avec le son après l'interaction utilisateur
             function playVideo() {
                 video.muted = false;
-                video.volume = 0.75; // Volume à 75%
-                video.play().catch(error => console.log("Autoplay bloqué par le navigateur :", error));
+                video.volume = 0.75;
+                video.play().then(() => {
+                    overlay.classList.add("hidden"); // Cacher la vignette une fois la vidéo lancée
+                }).catch(error => console.log("Autoplay bloqué, nécessite une interaction"));
             }
 
-            // Lancer la vidéo dès que possible
-            playVideo();
+            // Essayer de lancer la vidéo silencieusement
+            video.play().catch(() => {
+                console.log("Autoplay bloqué, affichage de la vignette");
+            });
 
-            // Écoute un clic pour s'assurer que l'autoplay fonctionne
+            // Clic ou touch pour jouer la vidéo
+            overlay.addEventListener("click", playVideo);
             document.body.addEventListener("click", playVideo);
+            document.body.addEventListener("touchstart", playVideo);
         });
     </script>
 
-    <h1>Et une bonne journée à vous! 😎 🤌🏽</h1>
+    <h1>😎 Et une bonne journée à vous! 🤌🏽</h1>
 </body>
 </html>
