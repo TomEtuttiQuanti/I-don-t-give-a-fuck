@@ -42,30 +42,26 @@
             border-radius: 10px;
         }
 
-        /* Style de la vignette */
+        /* Vignette qui couvre toute la vidéo */
         .overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Fond noir semi-transparent */
             color: white;
-            padding: 15px 25px;
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
             font-weight: bold;
-            border-radius: 5px;
             cursor: pointer;
-            transition: opacity 0.3s, background-color 0.3s;
-            border: 2px solid white;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
         }
 
-        /* Effet au survol */
-        .overlay:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #ffcc00;
-        }
-
-        /* Cacher la vignette après le clic */
+        /* Disparition fluide de la vignette */
         .hidden {
             opacity: 0;
             pointer-events: none;
@@ -82,8 +78,8 @@
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
 
-        <!-- Vignette "▶️ Cliquez ici ▶️" -->
-        <div id="overlay" class="overlay">▶️ Cliquez ici ▶️</div>
+        <!-- Vignette couvrant toute la vidéo -->
+        <div id="overlay" class="overlay">▶️ Cliquez pour jouer ▶️</div>
     </div>
 
     <script>
@@ -91,15 +87,14 @@
             let video = document.getElementById("myVideo");
             let overlay = document.getElementById("overlay");
 
-            // Fonction pour démarrer la vidéo au clic avec volume à 100%
             function playVideo() {
                 video.volume = 1.0; // Volume à 100%
                 video.play().then(() => {
-                    overlay.classList.add("hidden"); // Cacher la vignette une fois la vidéo lancée
+                    overlay.classList.add("hidden"); // Faire disparaître la vignette
                 }).catch(error => console.log("Lecture bloquée :", error));
             }
 
-            // Ajouter un écouteur d'événements pour lancer la vidéo au clic
+            // Ajouter un écouteur d'événements pour lancer la vidéo au clic sur la vignette
             overlay.addEventListener("click", playVideo);
         });
     </script>
