@@ -50,14 +50,22 @@
             transform: translate(-50%, -50%);
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 15px 20px;
+            padding: 15px 25px;
             font-size: 1.5rem;
             font-weight: bold;
             border-radius: 5px;
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s, background-color 0.3s;
+            border: 2px solid white;
         }
 
+        /* Effet au survol */
+        .overlay:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffcc00;
+        }
+
+        /* Cacher la vignette après le clic */
         .hidden {
             opacity: 0;
             pointer-events: none;
@@ -65,17 +73,17 @@
     </style>
 </head>
 <body>
-    <h1>Mantra du GOP : 📢</h1>
+    <h1>🔊 Mantra du GOP 🔊</h1>
 
     <div class="video-container">
         <!-- Vidéo locale -->
-        <video id="myVideo" loop playsinline muted>
+        <video id="myVideo" loop playsinline>
             <source src="mantra.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
 
-        <!-- Vignette "Cliquez ici! ▶️" -->
-        <div id="overlay" class="overlay">Cliquez ici! ▶️</div>
+        <!-- Vignette "▶️ Cliquez ici ▶️" -->
+        <div id="overlay" class="overlay">▶️ Cliquez ici ▶️</div>
     </div>
 
     <script>
@@ -83,23 +91,16 @@
             let video = document.getElementById("myVideo");
             let overlay = document.getElementById("overlay");
 
+            // Fonction pour démarrer la vidéo au clic avec volume à 100%
             function playVideo() {
-                video.muted = false;
-                video.volume = 0.75;
+                video.volume = 1.0; // Volume à 100%
                 video.play().then(() => {
                     overlay.classList.add("hidden"); // Cacher la vignette une fois la vidéo lancée
-                }).catch(error => console.log("Autoplay bloqué, nécessite une interaction"));
+                }).catch(error => console.log("Lecture bloquée :", error));
             }
 
-            // Essayer de lancer la vidéo silencieusement
-            video.play().catch(() => {
-                console.log("Autoplay bloqué, affichage de la vignette");
-            });
-
-            // Clic ou touch pour jouer la vidéo
+            // Ajouter un écouteur d'événements pour lancer la vidéo au clic
             overlay.addEventListener("click", playVideo);
-            document.body.addEventListener("click", playVideo);
-            document.body.addEventListener("touchstart", playVideo);
         });
     </script>
 
