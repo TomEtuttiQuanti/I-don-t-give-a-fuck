@@ -16,7 +16,8 @@
             justify-content: center;
             height: 100vh;
         }
-        iframe {
+        video {
+            width: 80%;
             border-radius: 10px;
         }
     </style>
@@ -24,35 +25,19 @@
 <body>
     <h1>Mantra du GOP 🔊</h1>
 
-    <!-- Intégration de la vidéo YouTube -->
-    <iframe id="youtubePlayer" width="80%" height="450px"
-        src="https://www.youtube.com/embed/vsa1ZvzFgvU?autoplay=1&mute=1&playsinline=1&loop=1&playlist=vsa1ZvzFgvU"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-    </iframe>
+    <!-- Vidéo locale -->
+    <video id="myVideo" autoplay loop playsinline controls>
+        <source src="mantra.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
 
     <script>
-        function setVolume() {
-            var iframe = document.getElementById("youtubePlayer");
-            var player = new YT.Player(iframe, {
-                events: {
-                    "onReady": function(event) {
-                        event.target.setVolume(75); // Volume à 75%
-                        event.target.unMute(); // Activer le son
-                    }
-                }
-            });
-        }
-
-        // Charger l’API YouTube
-        var tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        function onYouTubeIframeAPIReady() {
-            setVolume();
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            let video = document.getElementById("myVideo");
+            video.volume = 0.75; // Réglage du volume à 75%
+        });
     </script>
+
     <h1>Et une bonne journée à vous! 😎 🤌🏽</h1>
 </body>
 </html>
