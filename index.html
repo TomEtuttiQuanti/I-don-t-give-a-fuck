@@ -70,6 +70,10 @@
             pointer-events: none;
         }
 
+        .glitch {
+            animation: glitch 0.5s steps(10, end) infinite;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -79,34 +83,56 @@
             from { transform: scale(0.8); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+
+        @keyframes glitch {
+            0% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, 2px); }
+        }
     </style>
 </head>
 <body>
-    <h1 style="animation-delay: 0s;">Mantra du GOP 🔊</h1>
+    <h1 style="animation-delay: 0s; color: red;">⚠️ Avant de regarder, assure-toi d’être prêt... ⚠️</h1>
 
     <div class="video-container">
         <video id="myVideo" loop playsinline>
             <source src="mantra.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
-        <div id="overlay" class="overlay">Cliquez pour jouer ▶️</div>
+        <div id="overlay" class="overlay glitch">La vérité que personne ne veut que tu voies... 👀</div>
     </div>
 
-    <h1 style="animation-delay: 2.5s;">😎 Bonne journée! 🤌🏽</h1>
+    <h1 id="message-hack" style="opacity: 0;">💾 Tentative de contournement... Accès accordé. ✅</h1>
+    <h1 id="message-gop" style="opacity: 0;">📢 Cette vidéo est certifiée conforme aux standards d'efficacité du GOP.</h1>
+    
+    <h1 id="message-fin" style="animation-delay: 4s; opacity: 0;">Un grand merci au GOP pour cette œuvre cinématographique 🎬.</h1>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let video = document.getElementById("myVideo");
             let overlay = document.getElementById("overlay");
+            let messageHack = document.getElementById("message-hack");
+            let messageGop = document.getElementById("message-gop");
+            let messageFin = document.getElementById("message-fin");
+
+            function showMessage(element, delay) {
+                setTimeout(() => {
+                    element.style.opacity = 1;
+                }, delay);
+            }
 
             function playVideo() {
-                video.volume = 1.0;
-                video.play().then(() => {
-                    overlay.classList.add("hidden");
-                }).catch(error => console.log("Lecture bloquée :", error));
+                overlay.classList.add("hidden");
+                showMessage(messageHack, 1000);
+                showMessage(messageGop, 2000);
+                setTimeout(() => video.play(), 3000);
             }
 
             overlay.addEventListener("click", playVideo);
+
+            video.addEventListener("ended", function() {
+                messageFin.style.animation = "fadeIn 1.5s forwards, glitch 0.5s steps(10, end) infinite";
+            });
         });
     </script>
 </body>
