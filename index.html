@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Vidéo Auto</title>
     <style>
         @font-face {
@@ -23,18 +23,21 @@
             justify-content: center;
             height: 100vh;
             font-family: 'Avenir', sans-serif;
-            position: relative;
+            overflow: hidden;
+            padding: 0 10px;
         }
 
         h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin: 10px 0;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
         }
 
         .video-container {
             position: relative;
-            width: 80%;
-            max-width: 800px;
+            width: 100%;
+            max-width: 90vw;
         }
 
         video {
@@ -42,45 +45,54 @@
             border-radius: 10px;
         }
 
-        /* Vignette qui couvre toute la vidéo */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Fond noir semi-transparent */
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
             cursor: pointer;
             transition: opacity 0.3s ease-in-out;
             border-radius: 10px;
+            transform: scale(0.8);
+            animation: zoomIn 1s 1.5s forwards;
         }
 
-        /* Disparition fluide de la vignette */
         .hidden {
             opacity: 0;
             pointer-events: none;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <h1>🔊 Mantra du GOP 🔊</h1>
+    <h1 style="animation-delay: 0s;">Mantra du GOP 🔊</h1>
 
     <div class="video-container">
-        <!-- Vidéo locale -->
         <video id="myVideo" loop playsinline>
             <source src="mantra.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
-
-        <!-- Vignette couvrant toute la vidéo -->
-        <div id="overlay" class="overlay">▶️ Cliquez pour jouer ▶️</div>
+        <div id="overlay" class="overlay">Cliquez pour jouer ▶️</div>
     </div>
+
+    <h1 style="animation-delay: 2.5s;">😎 Bonne journée! 🤌🏽</h1>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -88,17 +100,14 @@
             let overlay = document.getElementById("overlay");
 
             function playVideo() {
-                video.volume = 1.0; // Volume à 100%
+                video.volume = 1.0;
                 video.play().then(() => {
-                    overlay.classList.add("hidden"); // Faire disparaître la vignette
+                    overlay.classList.add("hidden");
                 }).catch(error => console.log("Lecture bloquée :", error));
             }
 
-            // Ajouter un écouteur d'événements pour lancer la vidéo au clic sur la vignette
             overlay.addEventListener("click", playVideo);
         });
     </script>
-
-    <h1>😎 Et une bonne journée à vous! 🤌🏽</h1>
 </body>
 </html>
