@@ -1,268 +1,260 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Vidéo Mantra</title>
+    <title>Inspiration Quotidienne</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-        * {
-            box-sizing: border-box;
-        }
+```
+    * {
+        box-sizing: border-box;
+    }
 
-        body {
-            background-color: #0a0a0a;
-            color: #e0e0e0;
-            text-align: center;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            overflow-x: hidden;
-            padding: 20px 10px;
-        }
+    body {
+        background-color: #0a0a0a;
+        color: #e0e0e0;
+        text-align: center;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        overflow-x: hidden;
+        padding: 20px 10px;
+    }
 
+    h1 {
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin: 15px 0;
+        opacity: 0;
+        animation: fadeIn 1.2s ease-out forwards;
+        max-width: 600px;
+        line-height: 1.5;
+    }
+
+    .video-container {
+        position: relative;
+        width: 100%;
+        max-width: min(90vw, 800px);
+        margin: 20px 0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        border-radius: 12px;
+    }
+
+    video {
+        width: 100%;
+        border-radius: 12px;
+        display: block;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(30, 30, 40, 0.95), rgba(10, 10, 20, 0.95));
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.4s ease-in-out, transform 0.3s ease;
+        border-radius: 12px;
+        opacity: 0;
+        animation: fadeIn 1s 0.8s forwards;
+        backdrop-filter: blur(10px);
+    }
+
+    .overlay:hover {
+        transform: scale(1.02);
+    }
+
+    .overlay::before {
+        content: '▶';
+        font-size: 5rem;
+        display: block;
+        margin: 0 auto 25px auto;
+        line-height: 1;
+        opacity: 0.92;
+    }
+
+    .overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        font-weight: 400;
+        opacity: 0.8;
+        margin-top: 8px;
+    }
+
+    .controls {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .controls.visible {
+        opacity: 1;
+    }
+
+    .control-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+    }
+
+    .control-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .control-btn:active {
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
         h1 {
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin: 15px 0;
-            opacity: 0;
-            animation: fadeIn 1.2s ease-out forwards;
-            max-width: 600px;
-            line-height: 1.5;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: min(90vw, 800px);
-            margin: 20px 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        }
-
-        video {
-            width: 100%;
-            border-radius: 12px;
-            display: block;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(30, 30, 40, 0.95), rgba(10, 10, 20, 0.95));
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.4s ease-in-out, transform 0.3s ease;
-            border-radius: 12px;
-            opacity: 0;
-            animation: fadeIn 1s 0.8s forwards;
-            backdrop-filter: blur(10px);
-        }
-
-        .overlay:hover {
-            transform: scale(1.02);
+            font-size: 1.1rem;
         }
 
         .overlay::before {
-            content: '▶';
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.9;
+            font-size: 4rem;
         }
 
-        .overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .subtitle {
-            font-size: 0.95rem;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-top: 8px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .controls.visible {
-            opacity: 1;
+        .overlay {
+            font-size: 1.1rem;
         }
 
         .control-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            padding: 8px 16px;
+            font-size: 0.85rem;
         }
+    }
+</style>
+```
 
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .control-btn:active {
-            transform: translateY(0);
-        }
-
-        .credits {
-            font-size: 0.9rem;
-            opacity: 0;
-            margin-top: 25px;
-            color: #999;
-            animation: fadeIn 1.5s 2s forwards;
-        }
-
-        .credits strong {
-            color: #fff;
-            font-weight: 600;
-        }
-
-        @keyframes fadeIn {
-            from { 
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.1rem;
-            }
-            
-            .overlay {
-                font-size: 1.1rem;
-            }
-            
-            .overlay::before {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
 </head>
 <body>
-    <h1 style="animation-delay: 0s;">Vidéo Mantra</h1>
+    <h1>Votre moment d'inspiration quotidienne</h1>
 
-    <div class="video-container">
-        <video id="myVideo" loop playsinline preload="metadata" aria-label="Vidéo mantra">
-            <source src="mantra.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos.
-        </video>
-        <div id="overlay" class="overlay" role="button" tabindex="0" aria-label="Démarrer la vidéo">
-            Cliquez pour démarrer
-            <span class="subtitle">Lecture en boucle</span>
-        </div>
+```
+<div class="video-container">
+    <video id="inspirationVideo" preload="metadata">
+        <source src="votre-video.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+    <div class="overlay" id="overlay">
+        Commencer
+        <span class="subtitle">Cliquez pour lancer la vidéo</span>
     </div>
+</div>
 
-    <div id="controls" class="controls">
-        <button id="playPauseBtn" class="control-btn" aria-label="Lecture/Pause">⏸ Pause</button>
-        <button id="muteBtn" class="control-btn" aria-label="Activer/Couper le son">🔊 Son</button>
-    </div>
+<div class="controls" id="controls">
+    <button class="control-btn" id="playPauseBtn">Pause</button>
+    <button class="control-btn" id="restartBtn">Recommencer</button>
+    <button class="control-btn" id="muteBtn">Couper le son</button>
+</div>
 
-    <p class="credits">Réalisé par <strong>GOP</strong></p>
+<script>
+    const video = document.getElementById('inspirationVideo');
+    const overlay = document.getElementById('overlay');
+    const controls = document.getElementById('controls');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const muteBtn = document.getElementById('muteBtn');
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const video = document.getElementById("myVideo");
-            const overlay = document.getElementById("overlay");
-            const controls = document.getElementById("controls");
-            const playPauseBtn = document.getElementById("playPauseBtn");
-            const muteBtn = document.getElementById("muteBtn");
-            
-            let isPlaying = false;
+    // Démarrage de la vidéo au clic sur l'overlay
+    overlay.addEventListener('click', () => {
+        video.play();
+        overlay.classList.add('hidden');
+        controls.classList.add('visible');
+    });
 
-            // Fonction pour démarrer la vidéo
-            function startVideo() {
-                overlay.classList.add("hidden");
-                controls.classList.add("visible");
-                video.play().catch(err => {
-                    console.error("Erreur de lecture:", err);
-                    overlay.classList.remove("hidden");
-                    overlay.innerHTML = "⚠ Erreur de lecture<br><span class='subtitle'>Réessayez</span>";
-                });
-                isPlaying = true;
-                updatePlayPauseBtn();
-            }
+    // Bouton Play/Pause
+    playPauseBtn.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+            playPauseBtn.textContent = 'Pause';
+        } else {
+            video.pause();
+            playPauseBtn.textContent = 'Lecture';
+        }
+    });
 
-            // Gestion du clic sur l'overlay
-            overlay.addEventListener("click", startVideo);
-            
-            // Accessibilité clavier pour l'overlay
-            overlay.addEventListener("keydown", function(e) {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    startVideo();
-                }
-            });
+    // Bouton Recommencer
+    restartBtn.addEventListener('click', () => {
+        video.currentTime = 0;
+        video.play();
+        playPauseBtn.textContent = 'Pause';
+    });
 
-            // Bouton Play/Pause
-            playPauseBtn.addEventListener("click", function() {
-                if (video.paused) {
-                    video.play();
-                    isPlaying = true;
-                } else {
-                    video.pause();
-                    isPlaying = false;
-                }
-                updatePlayPauseBtn();
-            });
+    // Bouton Mute/Unmute
+    muteBtn.addEventListener('click', () => {
+        video.muted = !video.muted;
+        muteBtn.textContent = video.muted ? 'Activer le son' : 'Couper le son';
+    });
 
-            function updatePlayPauseBtn() {
-                playPauseBtn.textContent = isPlaying ? "⏸ Pause" : "▶ Lecture";
-            }
+    // Afficher l'overlay à la fin de la vidéo
+    video.addEventListener('ended', () => {
+        overlay.classList.remove('hidden');
+        overlay.querySelector('.subtitle').textContent = 'Rejouer la vidéo';
+        playPauseBtn.textContent = 'Lecture';
+    });
 
-            // Bouton Mute
-            muteBtn.addEventListener("click", function() {
-                video.muted = !video.muted;
-                muteBtn.textContent = video.muted ? "🔇 Muet" : "🔊 Son";
-            });
+    // Gestion des erreurs de chargement
+    video.addEventListener('error', (e) => {
+        console.error('Erreur de chargement de la vidéo:', e);
+        overlay.innerHTML = `
+            <div style="padding: 20px;">
+                ⚠️
+                <div style="margin-top: 15px; font-size: 1rem;">
+                    Impossible de charger la vidéo
+                </div>
+                <div class="subtitle" style="margin-top: 10px;">
+                    Vérifiez le chemin du fichier vidéo
+                </div>
+            </div>
+        `;
+    });
+</script>
+```
 
-            // Synchronisation avec l'état réel de la vidéo
-            video.addEventListener("play", function() {
-                isPlaying = true;
-                updatePlayPauseBtn();
-            });
-
-            video.addEventListener("pause", function() {
-                isPlaying = false;
-                updatePlayPauseBtn();
-            });
-        });
-    </script>
 </body>
 </html>
